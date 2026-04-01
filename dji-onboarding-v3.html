@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>杨晨炜 · 大疆入职介绍</title>
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/tailwindcss/3.0.23/tailwind.min.js"></script>
+  <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Noto Sans SC', 'Inter', sans-serif;
+      background: #000; color: #fff; overflow: hidden;
+    }
+    .slides-container {
+      width: 100vw; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: #0a0a0a;
+    }
+    .slide {
+      width: 100%; height: 100%;
+      position: absolute;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem;
+      opacity: 0; transform: translateX(100%);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      background: #000;
+    }
+    .slide.active { opacity:1; transform:translateX(0); }
+    .slide.prev { opacity:0; transform:translateX(-100%); }
+
+    .light-spot {
+      position: absolute; border-radius: 50%;
+      filter: blur(100px); opacity: 0.2; pointer-events: none;
+    }
+    .ls-blue { background: #3b82f6; }
+    .ls-cyan { background: #06b6d4; }
+    .ls-violet { background: #8b5cf6; }
+    .ls-amber { background: #f59e0b; }
+
+    @keyframes f1 {
+      0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,40px)}
+    }
+    @keyframes f2 {
+      0%,100%{transform:translate(0,0)} 50%{transform:translate(40px,-30px)}
+    }
+    @keyframes f3 {
+      0%,100%{transform:translate(0,0)} 50%{transform:translate(-20px,-30px)}
+    }
+
+    .slide-content {
+      position: relative; z-index: 10;
+      text-align: center; width: 100%;
+    }
+    .slide-content.left { text-align: left; }
+
+    .progress-bar {
+      position: fixed; bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 6px; z-index: 100;
+    }
+    .progress-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.2); cursor: pointer;
+      transition: all 0.3s;
+    }
+    .progress-dot.active { background: #fff; transform: scale(1.4); }
+
+    .page-number {
+      position: fixed; bottom: 44px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem; color: rgba(255,255,255,0.3);
+      z-index: 100; font-family: 'Inter', sans-serif;
+    }
+
+    /* Image backgrounds */
+    .bg-img {
+      position: absolute; top:0; left:0; width:100%; height:100%;
+      object-fit: cover; opacity: 0.15; pointer-events: none;
+    }
+    .bg-img-cover {
+      position: absolute; top:0; left:0; width:100%; height:100%;
+      object-fit: cover; opacity: 0.25; pointer-events: none;
+    }
+    .bg-overlay {
+      position: absolute; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.7); pointer-events: none;
+    }
+
+    /* Utility */
+    .tag {
+      display: inline-block; padding: 4px 12px; border-radius: 20px;
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 1px;
+    }
+    .metric-num {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900; line-height: 1;
+    }
+    .divider {
+      width: 40px; height: 2px; background: rgba(255,255,255,0.3);
+      margin: 0 auto;
+    }
+
+    /* Product image row */
+    .product-row {
+      display: flex; gap: 8px; justify-content: center;
+      align-items: flex-end; flex-wrap: wrap;
+    }
+    .product-row img {
+      height: 60px; border-radius: 6px; object-fit: contain;
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 16px;
+      text-align: left; width: 100%;
+    }
+    .card-row {
+      display: flex; gap: 8px; flex-direction: column; width: 100%;
+    }
+
+    /* Pain point cards */
+    .pain-card {
+      background: rgba(239,68,68,0.08);
+      border-left: 3px solid rgba(239,68,68,0.6);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px; text-align: left; width: 100%;
+    }
+
+    /* Value card */
+    .value-card {
+      background: rgba(59,130,246,0.08);
+      border: 1px solid rgba(59,130,246,0.15);
+      border-radius: 10px; padding: 14px; text-align: left; width: 100%;
+    }
+
+    /* Timeline */
+    .timeline-item {
+      display: flex; gap: 12px; text-align: left; width: 100%;
+      padding-bottom: 14px;
+      border-left: 2px solid rgba(255,255,255,0.15);
+      padding-left: 14px;
+      margin-left: 6px;
+    }
+    .timeline-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #3b82f6; margin-top: 5px;
+      margin-left: -21px; flex-shrink: 0;
+    }
+
+    /* Team */
+    .team-member {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px; padding: 10px 12px;
+      text-align: left; width: 100%;
+    }
+    .team-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+
+    /* Quote block */
+    .quote-block {
+      border-left: 3px solid #3b82f6;
+      padding-left: 16px; text-align: left;
+      margin: 8px 0; width: 100%;
+    }
+
+    /* Photo round */
+    .photo-round {
+      width: 80px; height: 80px; border-radius: 50%;
+      object-fit: cover; border: 2px solid rgba(255,255,255,0.2);
+    }
+
+    /* Arrow flow */
+    .flow-arrow {
+      color: rgba(255,255,255,0.3); font-size: 20px;
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+<div class="slides-container">
+
+  <!-- ==================== SLIDE 1: COVER ==================== -->
+  <div class="slide active" id="s1">
+    <img class="bg-img-cover" src="imgs/cover_bg.png">
+    <div class="bg-overlay"></div>
+    <div class="light-spot ls-blue" style="width:250px;height:250px;top:-80px;right:-80px;animation:f1 20s ease-in-out infinite"></div>
+    <div class="light-spot ls-cyan" style="width:200px;height:200px;bottom:-60px;left:-60px;animation:f2 25s ease-in-out infinite"></div>
+    <div class="slide-content" style="z-index:10;">
+      <p style="font-size:0.7rem;letter-spacing:3px;color:rgba(255,255,255,0.4);margin-bottom:24px;">大疆创新 · 影像部</p>
+      <h1 style="font-size:1.9rem;font-weight:900;line-height:1.3;margin-bottom:16px;">端到端相机仿真</h1>
+      <p style="font-size:1.1rem;font-weight:300;color:rgba(255,255,255,0.6);margin-bottom:32px;">从器件选型到算法验证的加速器</p>
+      <div class="divider" style="margin-bottom:24px;"></div>
+      <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);font-weight:300;">杨晨炜 · 入职介绍 · 2026.04</p>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 2: WHO AM I ==================== -->
+  <div class="slide" id="s2">
+    <img class="bg-img" src="imgs/tech_bg_05.png">
+    <div class="light-spot ls-violet" style="width:200px;height:200px;top:-60px;left:-60px;animation:f1 22s ease-in-out infinite"></div>
+    <div class="slide-content left">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:20px;">01 / 我是谁</p>
+      <div style="display:flex;gap:16px;align-items:center;margin-bottom:20px;">
+        <img class="photo-round" src="imgs/个人照片.jpg">
+        <div>
+          <h2 style="font-size:1.5rem;font-weight:900;">杨晨炜</h2>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.5);">影像部 · 相机仿真系统小组长</p>
+        </div>
+      </div>
+      <div class="card-row" style="gap:8px;margin-bottom:20px;">
+        <div class="card" style="padding:10px 14px;">
+          <p style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">教育</p>
+          <p style="font-size:0.85rem;font-weight:700;">浙江大学 · 光电 · 直博</p>
+        </div>
+        <div class="card" style="padding:10px 14px;">
+          <p style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">前职</p>
+          <p style="font-size:0.85rem;font-weight:700;">华为终端 · 主任工程师（18级）</p>
+        </div>
+        <div class="card" style="padding:10px 14px;">
+          <p style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">负责方向</p>
+          <p style="font-size:0.85rem;font-weight:700;">Pocket 系列 · 全景相机 · 旗舰无人机</p>
+        </div>
+      </div>
+      <p style="font-size:0.75rem;color:rgba(255,255,255,0.35);font-style:italic;">"做光学建模和器件仿真，六年旗舰相机经验。"</p>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 3: WHAT I BRING ==================== -->
+  <div class="slide" id="s3">
+    <div class="light-spot ls-blue" style="width:200px;height:200px;bottom:-50px;right:-50px;animation:f2 20s ease-in-out infinite"></div>
+    <div class="light-spot ls-amber" style="width:150px;height:150px;top:10%;left:-40px;animation:f3 18s ease-in-out infinite"></div>
+    <div class="slide-content left">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:16px;">02 / 我能带来什么</p>
+      <h2 style="font-size:1.4rem;font-weight:900;margin-bottom:20px;line-height:1.3;">把"凭经验拍脑袋"<br>变成"用数据说话"</h2>
+      <div class="card-row" style="gap:10px;">
+        <div class="value-card">
+          <p style="font-size:0.95rem;font-weight:700;margin-bottom:4px;">🔬 器件选型的"试金石"</p>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">器件还没打样，就能告诉你画质天花板在哪</p>
+        </div>
+        <div class="value-card">
+          <p style="font-size:0.95rem;font-weight:700;margin-bottom:4px;">⚡ 算法开发的"加速器"</p>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">ISP算法不用等硬件，仿真环境直接跑</p>
+        </div>
+        <div class="value-card">
+          <p style="font-size:0.95rem;font-weight:700;margin-bottom:4px;">🤝 团队决策的"共同语言"</p>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">光学/传感器/算法三方分歧，用数据说话</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 4: KEY ACHIEVEMENTS ==================== -->
+  <div class="slide" id="s4">
+    <div class="light-spot ls-cyan" style="width:180px;height:180px;top:-50px;right:-50px;animation:f1 20s ease-in-out infinite"></div>
+    <div class="slide-content left">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:12px;">03 / 华为六年 · 四个成果</p>
+      <div class="product-row" style="margin-bottom:16px;">
+        <img src="imgs/P50.png" alt="P50">
+        <img src="imgs/P70ultra.png" alt="P70ultra">
+        <img src="imgs/P80ultra.png" alt="P80ultra">
+        <img src="imgs/mate X6.png" alt="mateX6">
+      </div>
+      <div class="card-row" style="gap:6px;">
+        <div class="card" style="padding:10px 12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <span style="font-size:0.8rem;font-weight:700;">P50 计算光学</span>
+            <span class="tag" style="background:rgba(59,130,246,0.15);color:#60a5fa;">特性Owner</span>
+          </div>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">清晰度<span style="color:#60a5fa;font-weight:700;"> +20%</span>，Top1 卖点，发布会亮点</p>
+        </div>
+        <div class="card" style="padding:10px 12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <span style="font-size:0.8rem;font-weight:700;">Pura80 Ultra</span>
+            <span class="tag" style="background:rgba(245,158,11,0.15);color:#fbbf24;">标准制定</span>
+          </div>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">拦截器件问题 <span style="color:#fbbf24;font-weight:700;">40+</span>，DXO <span style="color:#fbbf24;font-weight:700;">175</span> 分行业 Top1</p>
+        </div>
+        <div class="card" style="padding:10px 12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <span style="font-size:0.8rem;font-weight:700;">Ai4Optics</span>
+            <span class="tag" style="background:rgba(139,92,246,0.15);color:#a78bfa;">核心开发</span>
+          </div>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">推理速度优于 Zemax <span style="color:#a78bfa;font-weight:700;">10x+</span></p>
+        </div>
+        <div class="card" style="padding:10px 12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <span style="font-size:0.8rem;font-weight:700;">MateX6 超薄模组</span>
+            <span class="tag" style="background:rgba(6,182,212,0.15);color:#22d3ee;">E2E设计</span>
+          </div>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">整机展开态厚度 <span style="color:#22d3ee;font-weight:700;">4.6mm</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 5: WHY DJI ==================== -->
+  <div class="slide" id="s5">
+    <div class="light-spot ls-amber" style="width:220px;height:220px;bottom:-80px;left:-80px;animation:f2 22s ease-in-out infinite"></div>
+    <div class="light-spot ls-blue" style="width:160px;height:160px;top:20%;right:-40px;animation:f3 18s ease-in-out infinite"></div>
+    <div class="slide-content">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:16px;">04 / 为什么来大疆</p>
+      <h2 style="font-size:1.6rem;font-weight:900;margin-bottom:24px;line-height:1.3;">这里的硬件约束更狠<br>仿真的价值更大</h2>
+      <div class="card-row" style="gap:12px;max-width:320px;margin:0 auto;">
+        <div style="text-align:left;">
+          <p style="font-size:0.9rem;font-weight:700;margin-bottom:4px;">极致产品</p>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">无人机和运动相机对体积/功耗/画质的平衡，比手机更极端</p>
+        </div>
+        <div class="divider" style="margin:4px 0;"></div>
+        <div style="text-align:left;">
+          <p style="font-size:0.9rem;font-weight:700;margin-bottom:4px;">从标准到工具</p>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">在华为我定标准，来大疆我想做工具——让整个团队都能用</p>
+        </div>
+        <div class="divider" style="margin:4px 0;"></div>
+        <div style="text-align:left;">
+          <p style="font-size:0.9rem;font-weight:700;margin-bottom:4px;">带团队</p>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);">从独立贡献者到负责人，下一步成长</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 6: THE PROBLEMS ==================== -->
+  <div class="slide" id="s6">
+    <img class="bg-img" src="imgs/slide-06-bg.png">
+    <div class="light-spot ls-violet" style="width:200px;height:200px;top:-60px;left:-60px;animation:f1 20s ease-in-out infinite"></div>
+    <div class="slide-content left">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:12px;">05 / 三个效率瓶颈</p>
+      <h2 style="font-size:1.3rem;font-weight:900;margin-bottom:16px;line-height:1.3;">当前的研发流程<br>哪里出了问题？</h2>
+      <div class="card-row" style="gap:8px;">
+        <div class="pain-card">
+          <p style="font-size:0.8rem;font-weight:700;margin-bottom:3px;">🔴 器件选型靠经验</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">规格纸≠实际效果，问题到打样才发现。返工成本百万级。</p>
+        </div>
+        <div class="pain-card">
+          <p style="font-size:0.8rem;font-weight:700;margin-bottom:3px;">🔴 算法开发等硬件</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">硬件delay → 算法也delay，整条链路卡死。团队空转等待。</p>
+        </div>
+        <div class="pain-card">
+          <p style="font-size:0.8rem;font-weight:700;margin-bottom:3px;">🔴 跨团队沟通成本高</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">光学说没问题、传感器说没问题、算法说不好——没客观依据。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 7: THE SOLUTION ==================== -->
+  <div class="slide" id="s7">
+    <img class="bg-img" src="imgs/slide14_bg.png">
+    <div class="light-spot ls-blue" style="width:200px;height:200px;top:-60px;right:-60px;animation:f2 20s ease-in-out infinite"></div>
+    <div class="light-spot ls-cyan" style="width:150px;height:150px;bottom:-40px;left:-40px;animation:f3 18s ease-in-out infinite"></div>
+    <div class="slide-content">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:12px;">06 / 我的解法</p>
+      <h2 style="font-size:1.5rem;font-weight:900;margin-bottom:8px;line-height:1.3;">端到端相机仿真系统</h2>
+      <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-bottom:20px;">给真实相机建一个"数字孪生"</p>
+      <!-- Architecture diagram -->
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;width:100%;max-width:340px;">
+        <div style="display:flex;gap:8px;margin-bottom:10px;">
+          <div style="flex:1;background:rgba(59,130,246,0.12);border-radius:8px;padding:10px;text-align:center;">
+            <p style="font-size:0.65rem;color:#60a5fa;margin-bottom:4px;">输入</p>
+            <p style="font-size:0.7rem;font-weight:700;">HDR 场景</p>
+          </div>
+          <div style="display:flex;align-items:center;color:rgba(255,255,255,0.3);">→</div>
+          <div style="flex:1;background:rgba(245,158,11,0.12);border-radius:8px;padding:10px;text-align:center;">
+            <p style="font-size:0.65rem;color:#fbbf24;margin-bottom:4px;">处理链路</p>
+            <p style="font-size:0.7rem;font-weight:700;">光学→传感器→ISP</p>
+          </div>
+          <div style="display:flex;align-items:center;color:rgba(255,255,255,0.3);">→</div>
+          <div style="flex:1;background:rgba(34,197,94,0.12);border-radius:8px;padding:10px;text-align:center;">
+            <p style="font-size:0.65rem;color:#4ade80;margin-bottom:4px;">输出</p>
+            <p style="font-size:0.7rem;font-weight:700;">模拟图像</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <div style="flex:1;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:8px;padding:8px;text-align:center;">
+            <p style="font-size:0.6rem;color:#a78bfa;">Ref 路径</p>
+            <p style="font-size:0.65rem;color:rgba(255,255,255,0.4);">理想输出 · Ground Truth</p>
+          </div>
+          <div style="flex:1;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);border-radius:8px;padding:8px;text-align:center;">
+            <p style="font-size:0.6rem;color:#22d3ee;">Deg 路径</p>
+            <p style="font-size:0.65rem;color:rgba(255,255,255,0.4);">真实链路 · 模拟退化</p>
+          </div>
+        </div>
+        <p style="font-size:0.6rem;color:rgba(255,255,255,0.3);margin-top:8px;text-align:center;">质量评价：MTF / ΔE / SSIM / PSNR</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 8: WHAT CAN IT DO ==================== -->
+  <div class="slide" id="s8">
+    <div class="light-spot ls-blue" style="width:180px;height:180px;top:-50px;left:-50px;animation:f1 22s ease-in-out infinite"></div>
+    <div class="light-spot ls-amber" style="width:140px;height:140px;bottom:10%;right:-30px;animation:f2 18s ease-in-out infinite"></div>
+    <div class="slide-content left">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:12px;">07 / 谁能用？怎么用？</p>
+      <div class="card-row" style="gap:6px;">
+        <div class="card" style="padding:10px 12px;border-left:3px solid #3b82f6;">
+          <p style="font-size:0.8rem;font-weight:700;margin-bottom:3px;">📐 光学设计组</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">输入镜头参数，直接输出模拟成像。不用等模组打样。</p>
+        </div>
+        <div class="card" style="padding:10px 12px;border-left:3px solid #22d3ee;">
+          <p style="font-size:0.8rem;font-weight:700;margin-bottom:3px;">📷 传感器/器件组</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">不同方案信噪比、色彩表现，虚拟环境批量对比。</p>
+        </div>
+        <div class="card" style="padding:10px 12px;border-left:3px solid #a78bfa;">
+          <p style="font-size:0.8rem;font-weight:700;margin-bottom:3px;">⚙️ ISP算法组</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">不等硬件，仿真环境直接开发和调参。边界场景批量生成。</p>
+        </div>
+        <div class="card" style="padding:10px 12px;border-left:3px solid #fbbf24;">
+          <p style="font-size:0.8rem;font-weight:700;margin-bottom:3px;">📊 产品/项目管理</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">选型有数据支撑，降低打样返工风险。项目排期更准确。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 9: TECH HIGHLIGHTS ==================== -->
+  <div class="slide" id="s9">
+    <img class="bg-img" src="imgs/slide11-bg.png">
+    <div class="light-spot ls-violet" style="width:180px;height:180px;bottom:-50px;right:-50px;animation:f3 20s ease-in-out infinite"></div>
+    <div class="slide-content left">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:12px;">08 / 技术亮点</p>
+      <h2 style="font-size:1.3rem;font-weight:900;margin-bottom:16px;">三个关键技术决策</h2>
+      <div class="card-row" style="gap:10px;">
+        <div style="margin-bottom:12px;">
+          <p style="font-size:0.85rem;font-weight:700;color:#60a5fa;margin-bottom:4px;">31 通道光谱建模</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">RGB 三通道无法精确模拟色差。光谱细分31通道，在光谱域进行PSF卷积，精确还原波长相关色散。</p>
+        </div>
+        <div class="divider" style="margin:4px 0;"></div>
+        <div style="margin-bottom:12px;">
+          <p style="font-size:0.85rem;font-weight:700;color:#22d3ee;margin-bottom:4px;">参数同步机制</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">AWB/CCM 在无噪声 Ref 路径估计，传递给 Deg 路径。估计更准，色彩一致。</p>
+        </div>
+        <div class="divider" style="margin:4px 0;"></div>
+        <div>
+          <p style="font-size:0.85rem;font-weight:700;color:#a78bfa;margin-bottom:4px;">分块视场处理</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">镜头中心和边缘光学特性差异大，像场分块独立处理，模拟结果贴近真实。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 10: 3-MONTH PLAN ==================== -->
+  <div class="slide" id="s10">
+    <img class="bg-img" src="imgs/slide19-bg.png">
+    <div class="light-spot ls-blue" style="width:180px;height:180px;top:-50px;right:-50px;animation:f1 20s ease-in-out infinite"></div>
+    <div class="slide-content left">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:12px;">09 / 三个月计划</p>
+      <h2 style="font-size:1.3rem;font-weight:900;margin-bottom:16px;">跑起来，用起来</h2>
+      <div style="margin-bottom:14px;">
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:#3b82f6;"></div>
+          <div>
+            <p style="font-size:0.85rem;font-weight:700;margin-bottom:2px;">第 1 月 · 调研与框架</p>
+            <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">梳理产品链路 · 搭建核心框架 · 团队到岗</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:#22d3ee;"></div>
+          <div>
+            <p style="font-size:0.85rem;font-weight:700;margin-bottom:2px;">第 2 月 · 跑通闭环</p>
+            <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">完整场景验证 · 对齐参数接口 · 邀请试用</p>
+          </div>
+        </div>
+        <div class="timeline-item" style="border-left-color:transparent;">
+          <div class="timeline-dot" style="background:#4ade80;"></div>
+          <div>
+            <p style="font-size:0.85rem;font-weight:700;margin-bottom:2px;">第 3 月 · 支撑业务</p>
+            <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);">接入真实需求 · 交付仿真报告 · 迭代系统</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 11: TEAM & NEEDS ==================== -->
+  <div class="slide" id="s11">
+    <img class="bg-img" src="imgs/slide-08-bg.png">
+    <div class="light-spot ls-cyan" style="width:200px;height:200px;top:-60px;left:-60px;animation:f2 20s ease-in-out infinite"></div>
+    <div class="slide-content left">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:12px;">10 / 团队与需求</p>
+      <p style="font-size:0.8rem;font-weight:700;margin-bottom:10px;">3 人团队</p>
+      <div class="card-row" style="gap:6px;margin-bottom:14px;">
+        <div class="team-member">
+          <div class="team-avatar" style="background:rgba(59,130,246,0.2);color:#60a5fa;">杨</div>
+          <div>
+            <p style="font-size:0.8rem;font-weight:700;">杨晨炜</p>
+            <p style="font-size:0.65rem;color:rgba(255,255,255,0.5);">小组长 · 相机架构 + 光学</p>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar" style="background:rgba(139,92,246,0.2);color:#a78bfa;">I</div>
+          <div>
+            <p style="font-size:0.8rem;font-weight:700;">ISP 工程师</p>
+            <p style="font-size:0.65rem;color:rgba(255,255,255,0.5);">算法开发与调优</p>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar" style="background:rgba(6,182,212,0.2);color:#22d3ee;">S</div>
+          <div>
+            <p style="font-size:0.8rem;font-weight:700;">器件仿真工程师</p>
+            <p style="font-size:0.65rem;color:rgba(255,255,255,0.5);">光学/传感器建模</p>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:0.8rem;font-weight:700;margin-bottom:8px;">需要支持</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span class="tag" style="background:rgba(239,68,68,0.15);color:#f87171;">🔴 HC尽快到位</span>
+        <span class="tag" style="background:rgba(239,68,68,0.15);color:#f87171;">🔴 跨部门对接</span>
+        <span class="tag" style="background:rgba(245,158,11,0.15);color:#fbbf24;">🟡 GPU服务器</span>
+        <span class="tag" style="background:rgba(245,158,11,0.15);color:#fbbf24;">🟡 数据权限</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 12: TO OTHER TEAMS ==================== -->
+  <div class="slide" id="s12">
+    <div class="light-spot ls-blue" style="width:200px;height:200px;top:-60px;right:-60px;animation:f1 22s ease-in-out infinite"></div>
+    <div class="light-spot ls-violet" style="width:160px;height:160px;bottom:-40px;left:-40px;animation:f2 18s ease-in-out infinite"></div>
+    <div class="slide-content left">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:12px;">11 / 给周边团队</p>
+      <h2 style="font-size:1.2rem;font-weight:900;margin-bottom:14px;line-height:1.3;">仿真系统是公共基础设施<br>不是一个人的工具</h2>
+      <div class="quote-block" style="margin-bottom:8px;">
+        <p style="font-size:0.7rem;font-weight:700;color:#60a5fa;margin-bottom:2px;">→ 光学组</p>
+        <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);font-style:italic;">"给我PSF和镜头参数，我帮你模拟成像效果。"</p>
+      </div>
+      <div class="quote-block" style="margin-bottom:8px;">
+        <p style="font-size:0.7rem;font-weight:700;color:#22d3ee;margin-bottom:2px;">→ 传感器组</p>
+        <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);font-style:italic;">"不同sensor方案，虚拟环境帮你对比。"</p>
+      </div>
+      <div class="quote-block" style="margin-bottom:8px;">
+        <p style="font-size:0.7rem;font-weight:700;color:#a78bfa;margin-bottom:2px;">→ 算法组</p>
+        <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);font-style:italic;">"不等硬件，给我ISP参数直接跑。"</p>
+      </div>
+      <div class="quote-block">
+        <p style="font-size:0.7rem;font-weight:700;color:#fbbf24;margin-bottom:2px;">→ 产品组</p>
+        <p style="font-size:0.7rem;color:rgba(255,255,255,0.5);font-style:italic;">"选型不再是'看着差不多'，而是'我跑过仿真'。"</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 13: CLOSING ==================== -->
+  <div class="slide" id="s13">
+    <img class="bg-img-cover" src="imgs/slide20-bg.png">
+    <div class="bg-overlay"></div>
+    <div class="light-spot ls-blue" style="width:200px;height:200px;top:-60px;right:-60px;animation:f1 20s ease-in-out infinite"></div>
+    <div class="light-spot ls-cyan" style="width:180px;height:180px;bottom:-60px;left:-60px;animation:f2 25s ease-in-out infinite"></div>
+    <div class="slide-content" style="z-index:10;">
+      <p style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:20px;">THANK YOU</p>
+      <h1 style="font-size:1.8rem;font-weight:900;line-height:1.3;margin-bottom:24px;">三个月内<br>让仿真系统跑起来</h1>
+      <div class="divider" style="margin-bottom:24px;"></div>
+      <p style="font-size:0.85rem;font-weight:300;color:rgba(255,255,255,0.5);margin-bottom:6px;">杨晨炜 · 影像部</p>
+      <p style="font-size:0.75rem;font-weight:300;color:rgba(255,255,255,0.35);">欢迎随时找我聊</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Progress & Navigation -->
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-number" id="pageNumber">1 / 13</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const progressBar = document.getElementById('progressBar');
+const pageNumber = document.getElementById('pageNumber');
+let current = 0;
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'progress-dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => goTo(i));
+  progressBar.appendChild(dot);
+});
+
+function update() {
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'prev');
+    if (i === current) s.classList.add('active');
+    else if (i < current) s.classList.add('prev');
+  });
+  document.querySelectorAll('.progress-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+  pageNumber.textContent = (current + 1) + ' / ' + slides.length;
+}
+
+function next() { if (current < slides.length - 1) { current++; update(); } }
+function prev() { if (current > 0) { current--; update(); } }
+function goTo(i) { current = i; update(); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') next();
+  else if (e.key === 'ArrowLeft') prev();
+});
+
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const d = tx - e.changedTouches[0].clientX;
+  if (Math.abs(d) > 50) { d > 0 ? next() : prev(); }
+});
+</script>
+</body>
+</html>
